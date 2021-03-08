@@ -1,0 +1,140 @@
+﻿
+
+@{
+    ViewBag.Title = "index";
+
+}
+<head>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="~/Content/style.css" />
+        <link href="~/Content/bootstrap.css" rel="stylesheet">
+        <link href="~/Content/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="~/Content/datepicker.css" rel="stylesheet">
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>*@
+    <link href="~/Content/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="#" />
+    
+
+    @*<script src="~/Scripts/d3.v6.min.js"></script>
+        <script src="~/Scripts/jquery.min.js"></script>
+        <script src="~/Scripts/d3.js" charset="utf-8"></script>
+        <script src="~/Scripts/ToNimo/pdfmake.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/vfs_fonts.js" defer></script>
+        <script type="text/javascript" src="~/Scripts/jquery.dataTables.min.js" defer></script>
+        <link href="~/Scripts/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/Scripts/Cluster.css" rel="stylesheet" type="text/css" />*@
+
+</head>
+<body>
+    <div style="width: 500px">
+
+        <span>
+            <label>No Invoice</label>
+            <input id="invoice" class="invoice" title="" type="text" name="style">
+
+        </span>
+        <button id="btn" class="btn-success">View</button>
+        <div>
+            <form action="/action_page.php">
+                <span style="margin-right: 36.5em; display: inline-block;">
+                    <label for="invoice_date">Invoice Date</label>
+                    <input type="text" id="invoice_date" @*name="invoice_date"*@ placeholder="dd\MM\yyyy">
+                </span>
+
+                <span>
+                    <label for="ShipTo" style="margin-right: 3.5em; display: inline-block;">Ship To</label>
+                    <textarea id="ShipTo" name="ShipTo" rows="4" cols="30"></textarea>
+                </span>
+                <br />
+                <span style="margin-right: 30em; display: inline-block;">
+                    <label for="To" style="margin-right: 5.7em; display: inline-block;">To</label>
+                    <textarea id="To" name="To" rows="4" cols="30"></textarea>
+                </span>
+                <span>
+                    <label for="payment_type" style="margin-right: 0.7em; display: inline-block;">Payment Type</label>
+                    <select id="payment_type" name="payment_type">
+                        <option value="Cash">Cash</option>
+                        <option value="COD">COD</option>
+
+                    </select>
+                </span>
+                <br />
+                <br />
+
+                <span style="margin-right: 31em; display: inline-block;">
+                    <label for="sales_name" style="margin-right: 1em; display: inline-block;">Sales Name</label>
+                    <select id="sales_name" name="sales_name">
+                        <option value="Cash">Cash</option>
+                        <option value="COD">COD</option>
+
+                    </select>
+                </span>
+
+                <span>
+                    <label for="no_invoice" style="margin-right: 2em; display: inline-block;">No Invoice</label>
+                    <input type="text" id="no_invoice" placeholder="Input No Invoice">
+                </span>
+                <br />
+                <br />
+                <span>
+                    <label for="courier" style="margin-right: 2.7em; display: inline-block;">Courier</label>
+                    <select id="courier" name="courier">
+                        <option value="Cash">Cash</option>
+                        <option value="COD">COD</option>
+                    </select>
+                </span>
+
+
+
+            </form>
+            <div>
+                <table id="item" cellpadding="0" cellspacing="0" border="1" style="margin-left: 375px; margin-right: auto;" class="display" width="95%">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Weight(kg)</th>
+                            <th>QTY</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <br />
+            <button id="save" class="btn-success">SAVE</button>
+        </div>
+
+        @*<button id="btn2" class="btn-success">Call Python</button>*@
+    </div>
+    
+</body>
+
+
+<script>
+
+    function OnSuccess(response) {
+
+        $("#tblCustomers").DataTable(
+            {
+                bLengthChange: true,
+                lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                bFilter: true,
+                bSort: true,
+                bPaginate: true,
+                destroy: true,
+                data: response,
+                columns: [{ 'data': 'MONTH' },
+                { 'data': 'YEAR' },
+                { 'data': 'IDREFPELANGGAN' },
+                { 'data': 'NAMA' },
+                { 'data': 'CLUSTER_NUM' }]
+            });
+    };
+
+
+
+</script>
+
