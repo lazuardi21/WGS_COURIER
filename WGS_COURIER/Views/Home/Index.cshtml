@@ -113,6 +113,7 @@
             var no_inv = document.getElementById("invoice").value;
             //var monthVal = document.getElementById("Month").value;
             //var yearVal = document.getElementById("YEAR").value;
+            
             $.ajax({
                 type: "GET",
                 cache: false,
@@ -120,7 +121,23 @@
                 data: '{}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: OnSuccess,
+                success: function (response) {
+                    $("#item").DataTable(
+                        {
+                            bLengthChange: false,
+                            lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                            bFilter: false,
+                            bSort: true,
+                            bPaginate: false,
+                            destroy: true,
+                            data: response,
+                            columns: [{ 'data': 'item' },
+                            { 'data': 'weight' },
+                            { 'data': 'qty' },
+                            { 'data': 'unit_price' },
+                            { 'data': 'total' }]
+                        });
+                },
                 failure: function (response) {
                     alert(response.d);
                 },
@@ -128,7 +145,15 @@
                     alert(response.d);
                 }
 
+
+
             });
+            //function OnSuccess(response) {
+                
+
+            //};
+            
+            
         });
 
         $('#sales_name').on('click', function () {
@@ -213,24 +238,7 @@
 
         });
 
-        function OnSuccess(response) {
-
-            $("#item").DataTable(
-                {
-                    bLengthChange: true,
-                    lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                    bFilter: true,
-                    bSort: true,
-                    bPaginate: true,
-                    destroy: true,
-                    data: response,
-                    columns: [{ 'data': 'MONTH' },
-                    { 'data': 'YEAR' },
-                    { 'data': 'IDREFPELANGGAN' },
-                    { 'data': 'NAMA' },
-                    { 'data': 'CLUSTER_NUM' }]
-                });
-        };
+        
     });
     
 
