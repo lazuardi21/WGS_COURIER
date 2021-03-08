@@ -70,8 +70,7 @@
                 <span>
                     <label for="courier" style="margin-right: 2.7em; display: inline-block;">Courier</label>
                     <select id="courier" name="courier">
-                        <option value="Cash">Cash</option>
-                        <option value="COD">COD</option>
+                        <option value="" selected hidden>Select Courier</option>
                     </select>
                 </span>
 
@@ -172,6 +171,46 @@
             //var monthVal = document.getElementById("Month").value;
             //var yearVal = document.getElementById("YEAR").value;
             
+        });
+
+        $('#courier').on('click', function () {
+            debugger
+
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            console.log(this[0])
+            if (this[1]) {
+
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: apiBaseUrl + 'api/COURIER/all',
+                    data: '{}',
+                    success: function (data) {
+                        
+                        var s = "";
+                        for (var i = 0; i < data.length; i++) {
+                            var id = this.id;
+                            var value = this.value;
+                            s += '<option value="' + data[i].id + '">' + data[i].courier_name + '</option>';
+                        }
+                        $("#courier").html(s);
+                    },
+                    failure: function (data) {
+                        alert(data.d);
+                    },
+                    error: function (data) {
+                        alert(data.d);
+                    }
+
+                });
+            }
+
+            //var no_inv = document.getElementById("invoice").value;
+            //var monthVal = document.getElementById("Month").value;
+            //var yearVal = document.getElementById("YEAR").value;
+
         });
 
         function OnSuccess(response) {

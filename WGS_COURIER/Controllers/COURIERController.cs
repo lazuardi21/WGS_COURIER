@@ -13,6 +13,8 @@ namespace WGS_COURIER.Controller
 	public class COURIERController : ApiController
 	{
 		private string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+
+		[Route("api/COURIER/all")]
 		[HttpGet]
 		public IQueryable<COURIER> Get()
 		{
