@@ -30,15 +30,6 @@ namespace WGS_COURIER.Controller
 			return list.AsQueryable();
 		}
 
-		[Route("api/INVOICE/ship_to/{ship_to}")]
-		[HttpGet]
-		public IQueryable<INVOICE> GetByship_to(string ship_to)
-		{
-			INVOICERepository rep = new INVOICERepository(connectionString);
-			List<INVOICE> list = rep.GetDataByship_to(ship_to);
-			return list.AsQueryable();
-		}
-
 		public void Post(INVOICE invoice)
 		{
 			INVOICERepository rep = new INVOICERepository(connectionString);

@@ -144,7 +144,7 @@ namespace WGS_COURIER.Repositories
 					{
 						item = new COURIER();
 						if (reader[0] != DBNull.Value) { item.id = Convert.ToInt32(reader[0]); }
-						if (reader[1] != DBNull.Value) { item.courier_name = Convert.ToInt32(reader[1]); }
+						if (reader[1] != DBNull.Value) { item.courier_name = Convert.ToString(reader[1]); }
 						items.Add(item);
 					}
 				}
@@ -173,7 +173,7 @@ namespace WGS_COURIER.Repositories
 					{
 						item = new COURIER();
 						if (reader[0] != DBNull.Value) { item.id = Convert.ToInt32(reader[0]); }
-						if (reader[1] != DBNull.Value) { item.courier_name = Convert.ToInt32(reader[1]); }
+						if (reader[1] != DBNull.Value) { item.courier_name = Convert.ToString(reader[1]); }
 						items.Add(item);
 					}
 				}
@@ -211,7 +211,7 @@ namespace WGS_COURIER.Repositories
 
 			DataColumn c1 = new DataColumn("id", typeof(int)); 
 			dt.Columns.Add(c1);
-			DataColumn c2 = new DataColumn("courier_name", typeof(int)); c2.AllowDBNull = true;
+			DataColumn c2 = new DataColumn("courier_name", typeof(string)); c2.AllowDBNull = true;
 			dt.Columns.Add(c2);
 
 			foreach (COURIER v in courier)

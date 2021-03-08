@@ -13,6 +13,8 @@ namespace WGS_COURIER.Controller
 	public class SALESController : ApiController
 	{
 		private string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
+
+		[Route("api/SALES/all")]
 		[HttpGet]
 		public IQueryable<SALES> Get()
 		{
@@ -27,15 +29,6 @@ namespace WGS_COURIER.Controller
 		{
 			SALESRepository rep = new SALESRepository(connectionString);
 			List<SALES> list = rep.GetDataByid(id);
-			return list.AsQueryable();
-		}
-
-		[Route("api/SALES/sales_name/{sales_name}")]
-		[HttpGet]
-		public IQueryable<SALES> GetBysales_name(int sales_name)
-		{
-			SALESRepository rep = new SALESRepository(connectionString);
-			List<SALES> list = rep.GetDataBysales_name(sales_name);
 			return list.AsQueryable();
 		}
 

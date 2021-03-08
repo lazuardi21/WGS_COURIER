@@ -71,7 +71,7 @@ namespace WGS_COURIER.Repositories
 				{
 					Message = "";
 					conn.Open();
-					SqlCommand command = new SqlCommand("UPDATE Sales SET  WHERE id = @id AND sales_name = @sales_name", conn);
+					SqlCommand command = new SqlCommand("UPDATE Sales SET sales_name = @sales_name WHERE id = @id", conn);
 					command.CommandType = System.Data.CommandType.Text;
 					if (sales.id != null) { command.Parameters.AddWithValue("@id", sales.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
 					if (sales.sales_name != null) { command.Parameters.AddWithValue("@sales_name", sales.sales_name); } else { command.Parameters.AddWithValue("@sales_name", DBNull.Value); } 
@@ -94,7 +94,7 @@ namespace WGS_COURIER.Repositories
 					conn.Open();
 					foreach(SALES item in saless)
 					{
-						SqlCommand command = new SqlCommand("UPDATE Sales SET  WHERE id = @id AND sales_name = @sales_name", conn);
+						SqlCommand command = new SqlCommand("UPDATE Sales SET sales_name = @sales_name WHERE id = @id", conn);
 						command.CommandType = System.Data.CommandType.Text;
 						if (item.id != null) { command.Parameters.AddWithValue("@id", item.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
 						if (item.sales_name != null) { command.Parameters.AddWithValue("@sales_name", item.sales_name); } else { command.Parameters.AddWithValue("@sales_name", DBNull.Value); } 
@@ -116,10 +116,9 @@ namespace WGS_COURIER.Repositories
 				{
 					Message = "";
 					conn.Open();
-					SqlCommand command = new SqlCommand("DELETE Sales WHERE id = @id AND sales_name = @sales_name", conn);
+					SqlCommand command = new SqlCommand("DELETE Sales WHERE id = @id", conn);
 					command.CommandType = System.Data.CommandType.Text;
 					if (id.id != null) { command.Parameters.AddWithValue("@id", id.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
-					if (id.sales_name != null) { command.Parameters.AddWithValue("@sales_name", id.sales_name); } else { command.Parameters.AddWithValue("@sales_name", DBNull.Value); } 
 					command.ExecuteNonQuery();
 				}
 				catch (Exception ex)
@@ -145,7 +144,7 @@ namespace WGS_COURIER.Repositories
 					{
 						item = new SALES();
 						if (reader[0] != DBNull.Value) { item.id = Convert.ToInt32(reader[0]); }
-						if (reader[1] != DBNull.Value) { item.sales_name = Convert.ToInt32(reader[1]); }
+						if (reader[1] != DBNull.Value) { item.sales_name = Convert.ToString(reader[1]); }
 						items.Add(item);
 					}
 				}
@@ -174,36 +173,7 @@ namespace WGS_COURIER.Repositories
 					{
 						item = new SALES();
 						if (reader[0] != DBNull.Value) { item.id = Convert.ToInt32(reader[0]); }
-						if (reader[1] != DBNull.Value) { item.sales_name = Convert.ToInt32(reader[1]); }
-						items.Add(item);
-					}
-				}
-				catch (Exception ex)
-				{
-					Message = ex.Message;
-				}
-			}
-			return items;
-		}
-
-		public List<SALES> GetDataBysales_name(int sales_name)
-		{
-			List<SALES> items = new List<SALES>();
-			using (var conn = new SqlConnection(connString))
-			{
-				Message = "";
-				try
-				{
-					conn.Open();
-					SqlCommand command = new SqlCommand("SELECT [id], [sales_name] FROM Sales WHERE sales_name = @sales_name", conn);
-					command.Parameters.AddWithValue("@sales_name", sales_name);
-					SqlDataReader reader = command.ExecuteReader();
-					SALES item = new SALES();
-					while(reader.Read())
-					{
-						item = new SALES();
-						if (reader[0] != DBNull.Value) { item.id = Convert.ToInt32(reader[0]); }
-						if (reader[1] != DBNull.Value) { item.sales_name = Convert.ToInt32(reader[1]); }
+						if (reader[1] != DBNull.Value) { item.sales_name = Convert.ToString(reader[1]); }
 						items.Add(item);
 					}
 				}
@@ -235,33 +205,13 @@ namespace WGS_COURIER.Repositories
 			}
 		}
 
-		public void RemoveBysales_name(int id)
-		{
-			using (var conn = new SqlConnection(connString))
-			{
-				try
-				{
-					Message = "";
-					conn.Open();
-					SqlCommand command = new SqlCommand("DELETE Sales WHERE sales_name = @sales_name", conn);
-					command.CommandType = System.Data.CommandType.Text;
-					if (id != null) { command.Parameters.AddWithValue("@sales_name", id); } else { command.Parameters.AddWithValue("@sales_name", DBNull.Value); } 
-					command.ExecuteNonQuery();
-				}
-				catch (Exception ex)
-				{
-					Message = ex.Message;
-				}
-			}
-		}
-
 		public DataTable GetDataTable(List<SALES> sales)
 		{
 			DataTable dt = new DataTable("SALES");
 
 			DataColumn c1 = new DataColumn("id", typeof(int)); 
 			dt.Columns.Add(c1);
-			DataColumn c2 = new DataColumn("sales_name", typeof(int)); 
+			DataColumn c2 = new DataColumn("sales_name", typeof(string)); c2.AllowDBNull = true;
 			dt.Columns.Add(c2);
 
 			foreach (SALES v in sales)
