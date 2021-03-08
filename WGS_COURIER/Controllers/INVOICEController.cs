@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Configuration;
 using WGS_COURIER.Models;
 using WGS_COURIER.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WGS_COURIER.Controller
 {
@@ -30,7 +31,15 @@ namespace WGS_COURIER.Controller
 			return list.AsQueryable();
 		}
 
-		public void Post(INVOICE invoice)
+		[Route("api/INVOICE/upload")]
+		[HttpPost]
+        public IActionResult Upload([FromBody] INVOICE invoice)
+        {
+            Post(invoice);
+            return null;
+        }
+
+        public void Post(INVOICE invoice)
 		{
 			INVOICERepository rep = new INVOICERepository(connectionString);
 			rep.Add(invoice);

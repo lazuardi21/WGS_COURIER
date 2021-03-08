@@ -24,9 +24,9 @@ namespace WGS_COURIER.Repositories
 				{
 					Message = "";
 					conn.Open();
-					SqlCommand command = new SqlCommand("INSERT INTO Invoice ([id], [invoice_date], [t_o], [ship_to], [payment_type], [sales_name], [courier_name], [no_invoice]) VALUES(@id, @invoice_date, @t_o, @ship_to, @payment_type, @sales_name, @courier_name, @no_invoice)", conn);
+					SqlCommand command = new SqlCommand("INSERT INTO Invoice ( [invoice_date], [t_o], [ship_to], [payment_type], [sales_name], [courier_name], [no_invoice]) VALUES(@invoice_date, @t_o, @ship_to, @payment_type, @sales_name, @courier_name, @no_invoice)", conn);
 					command.CommandType = System.Data.CommandType.Text;
-					if (invoice.id != null) { command.Parameters.AddWithValue("@id", invoice.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
+					//if (invoice.id != null) { command.Parameters.AddWithValue("@id", invoice.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
 					if (invoice.invoice_date != null) { command.Parameters.AddWithValue("@invoice_date", invoice.invoice_date); } else { command.Parameters.AddWithValue("@invoice_date", DBNull.Value); } 
 					if (invoice.t_o != null) { command.Parameters.AddWithValue("@t_o", invoice.t_o); } else { command.Parameters.AddWithValue("@t_o", DBNull.Value); } 
 					if (invoice.ship_to != null) { command.Parameters.AddWithValue("@ship_to", invoice.ship_to); } else { command.Parameters.AddWithValue("@ship_to", DBNull.Value); } 
@@ -195,7 +195,7 @@ namespace WGS_COURIER.Repositories
 				try
 				{
 					conn.Open();
-					SqlCommand command = new SqlCommand("SELECT [id], [invoice_date], [t_o], [ship_to], [payment_type], [sales_name], [courier_name], [no_invoice] FROM Invoice WHERE id = @id", conn);
+					SqlCommand command = new SqlCommand("SELECT [id], [invoice_date], [t_o], [ship_to], [payment_type], [sales_name], [courier_name], [no_invoice] FROM Invoice WHERE no_invoice = @id", conn);
 					command.Parameters.AddWithValue("@id", id);
 					SqlDataReader reader = command.ExecuteReader();
 					INVOICE item = new INVOICE();

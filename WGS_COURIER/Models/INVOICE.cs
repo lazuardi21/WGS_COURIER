@@ -16,7 +16,7 @@ namespace WGS_COURIER.Models
 
 		public INVOICE()
 		{
-
+			
 		}
 	}
 }

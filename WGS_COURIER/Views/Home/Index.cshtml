@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "index";
 
 }
@@ -9,17 +7,13 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" defer></script>
     <link href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
- 
     <link href="~/Content/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="#" />
-
-
-
+    <link rel="shortcut icon" href="#"/>
 
 </head>
 <body>
     <div style="width: 500px">
-
+     
         <span>
             <label>No Invoice</label>
             <input id="invoice" class="invoice" title="" type="text" name="style">
@@ -30,7 +24,7 @@
             <form action="">
                 <span style="margin-right: 36.5em; display: inline-block;">
                     <label for="invoice_date">Invoice Date</label>
-                    <input type="text" id="invoice_date" placeholder="dd\MM\yyyy">
+                    <input type="text" id="invoice_date" placeholder="MM\dd\yyyy">
                 </span>
 
                 <span>
@@ -55,9 +49,9 @@
 
                 <span style="margin-right: 31em; display: inline-block;">
                     <label for="sales_name" style="margin-right: 1em; display: inline-block;">Sales Name</label>
-                    <select id="sales_name" class="sales_name" size="1"  name="sales_name">
-                    <option value="" selected hidden>Select Sales Name</option>
-                       
+                    <select id="sales_name" class="sales_name" size="1" name="sales_name">
+                        <option value="" selected hidden>Select Sales Name</option>
+
                     </select>
                 </span>
 
@@ -108,12 +102,32 @@
 
         //$("#item").hide();
         $('#btn').on('click', function () {
-            debugger
+            //debugger
             $("#item").show();
             var no_inv = document.getElementById("invoice").value;
-            //var monthVal = document.getElementById("Month").value;
-            //var yearVal = document.getElementById("YEAR").value;
+       
             
+            var Id = no_inv
+            @*$.ajax({
+                type: "POST",
+                url: '@Url.Action("Test", "Home", new { Id = "x"})'.replace(/x/g, Id),
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    
+                },
+                failure: function (response) {
+                    alert(response.d);
+                },
+                error: function (response) {
+                    alert(response.d);
+                }
+
+
+
+            });*@
+
             $.ajax({
                 type: "GET",
                 cache: false,
@@ -148,12 +162,9 @@
 
 
             });
-            //function OnSuccess(response) {
-                
 
-            //};
-            
-            
+
+
         });
 
         $('#sales_name').on('click', function () {
@@ -195,11 +206,11 @@
             //var no_inv = document.getElementById("invoice").value;
             //var monthVal = document.getElementById("Month").value;
             //var yearVal = document.getElementById("YEAR").value;
-            
+
         });
 
         $('#courier').on('click', function () {
-            debugger
+           
 
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
@@ -213,7 +224,7 @@
                     url: apiBaseUrl + 'api/COURIER/all',
                     data: '{}',
                     success: function (data) {
-                        
+
                         var s = "";
                         for (var i = 0; i < data.length; i++) {
                             var id = this.id;
@@ -238,9 +249,39 @@
 
         });
 
-        
+        $('#save').on('click', function () {
+            debugger
+            var inv = {};
+            inv.invoice_date = $("#invoice_date").val();
+            inv.ship_to = $("#ShipTo").val();
+            inv.payment_type = $("#payment_type").val();
+            inv.sales_name = $("#sales_name").val();
+            inv.no_invoice= $("#no_invoice").val();
+            inv.courier_name = $("#courier").val();
+            inv.t_o = $("#To").val();
+
+            $.ajax({
+                url: apiBaseUrl + 'api/INVOICE/Upload',
+                type: "Post",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(inv),
+                dataType: "json",
+                success: function (response) {
+
+                    alert(response);
+
+                },
+
+                error: function (x, e) {
+                    alert('Failed');
+                    alert(x.responseText);
+                    alert(x.status);
+
+                }
+            });
+        });
     });
-    
+
 
 
 
