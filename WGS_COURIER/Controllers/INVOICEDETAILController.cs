@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Configuration;
 using WGS_COURIER.Models;
 using WGS_COURIER.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WGS_COURIER.Controller
 {
@@ -23,11 +24,20 @@ namespace WGS_COURIER.Controller
 
 		[Route("api/INVOICEDETAIL/id/{id}")]
 		[HttpGet]
-		public IQueryable<INVOICEDETAIL> GetByid(int id)
+		public IQueryable<INVOICEDETAIL> GetByid(string id)
 		{
 			INVOICEDETAILRepository rep = new INVOICEDETAILRepository(connectionString);
 			List<INVOICEDETAIL> list = rep.GetDataByid(id);
 			return list.AsQueryable();
+			
+		}
+
+		[Route("api/INVOICEDETAIL/upload")]
+		[HttpPost]
+		public IActionResult Upload([FromBody] INVOICEDETAIL invoicedetail)
+		{
+			Post(invoicedetail);
+			return null;
 		}
 
 		public void Post(INVOICEDETAIL invoicedetail)
@@ -36,13 +46,29 @@ namespace WGS_COURIER.Controller
 			rep.Add(invoicedetail);
 		}
 
+		[Route("api/INVOICEDETAIL/update")]
+		[HttpPost]
+		public IActionResult Update([FromBody] INVOICEDETAIL invoicedetail)
+		{
+			Put(invoicedetail);
+			return null;
+		}
+
 		public void Put(INVOICEDETAIL invoicedetail)
 		{
 			INVOICEDETAILRepository rep = new INVOICEDETAILRepository(connectionString);
 			rep.Update(invoicedetail);
 		}
 
-		public void Delete(INVOICEDETAIL invoicedetail)
+		[Route("api/INVOICEDETAIL/Delete")]
+		[HttpPost]
+		public IActionResult Delete([FromBody] INVOICEDETAIL invoicedetail)
+		{
+			Remove(invoicedetail);
+			return null;
+		}
+
+		public void Remove(INVOICEDETAIL invoicedetail)
 		{
 			INVOICEDETAILRepository rep = new INVOICEDETAILRepository(connectionString);
 			rep.Remove(invoicedetail);

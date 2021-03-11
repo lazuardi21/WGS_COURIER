@@ -36,8 +36,8 @@ namespace WGS_COURIER.Controller
         public IActionResult Upload([FromBody] INVOICE invoice)
         {
             Post(invoice);
-            return null;
-        }
+			return null;
+		}
 
         public void Post(INVOICE invoice)
 		{

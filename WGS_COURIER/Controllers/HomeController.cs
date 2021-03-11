@@ -15,31 +15,32 @@ namespace WebApplicationCsharp6.Controllers
         private string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
         public ActionResult Index()
         {
-
             return View();
         }
 
-        public ActionResult Test(int id)
+        public ActionResult InvoiceDetailList()
         {
             viewInvoice viewinvoice = new viewInvoice();
 
-            List<INVOICE> list = new List<INVOICE>();
-
-            INVOICERepository rep = new INVOICERepository(connectionString);
-            list = rep.GetDataByid(id);
-
-            //List<AA_ACTIVE_THRESHOLD> listActiveThreshold = new List<AA_ACTIVE_THRESHOLD>();
-            //AA_ACTIVE_THRESHOLDRepository repActiveThreshold = new AA_ACTIVE_THRESHOLDRepository(connectionStringThreshold);
-            //listActiveThreshold = repActiveThreshold.GetData();
-
-
-            viewinvoice.allInvoice = list;
-
-            //viewThresholds.allAAActiveThreshold = repActiveThreshold.GetData();
-
-            return View("~/Views/Home/Index.cshtml", viewinvoice);
+            List<INVOICEDETAIL> list = new List<INVOICEDETAIL>();
+            INVOICEDETAILRepository rep = new INVOICEDETAILRepository(connectionString);
+            list = rep.GetData();
+            //viewinvoice.AllInvoice = list;
+            
+            return PartialView("~/Views/Home/InvoiceDetailList.cshtml", list);
         }
 
+        public ActionResult InvoiceDetailFiltered(string id)
+        {
+            //viewInvoice viewinvoice = new viewInvoice();
+
+            List<INVOICEDETAIL> list = new List<INVOICEDETAIL>();
+            INVOICEDETAILRepository rep = new INVOICEDETAILRepository(connectionString);
+            list = rep.GetDataByid(id);
+            //viewinvoice.AllInvoice = list;
+
+            return PartialView("~/Views/Home/InvoiceDetailList.cshtml", list);
+        }
 
 
     }

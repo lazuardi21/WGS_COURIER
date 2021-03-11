@@ -5,7 +5,7 @@ namespace WGS_COURIER.Models
 {
 	public  class viewInvoice
 	{
-		public List<INVOICE> allInvoice { get; set; }
+		public List<INVOICEDETAIL> AllInvoice { get; set; }
 
 		
 	}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WGS_COURIER.Models.INVOICEDETAIL>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.item)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.unit_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.no_invoice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.item)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.weight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.unit_price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.no_invoice)
+        </td>
+        <td>
+            <a href='#' class='btn btn-success' onclick="@("EditItem('" + item.no_invoice + "')")"> <span class='fa fa-edit' style="color: white; font-size: 20px;"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;
+            <a href='#' class='btn btn-danger' onclick="@("DeleteItem('" + item.id + "')")"> <span class='fas fa-trash-alt' style='color: white; font-size: 20px;'></span> </a>
+        </td>
+    </tr>
+}
+
+</table>

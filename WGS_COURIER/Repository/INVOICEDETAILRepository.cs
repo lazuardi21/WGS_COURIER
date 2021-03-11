@@ -24,9 +24,9 @@ namespace WGS_COURIER.Repositories
 				{
 					Message = "";
 					conn.Open();
-					SqlCommand command = new SqlCommand("INSERT INTO invoiceDetail ([id], [item], [weight], [qty], [unit_price], [total], [no_invoice]) VALUES(@id, @item, @weight, @qty, @unit_price, @total, @no_invoice)", conn);
+					SqlCommand command = new SqlCommand("INSERT INTO invoiceDetail ([item], [weight], [qty], [unit_price], [total], [no_invoice]) VALUES( @item, @weight, @qty, @unit_price, @total, @no_invoice)", conn);
 					command.CommandType = System.Data.CommandType.Text;
-					if (invoicedetail.id != null) { command.Parameters.AddWithValue("@id", invoicedetail.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
+					//if (invoicedetail.id != null) { command.Parameters.AddWithValue("@id", invoicedetail.id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
 					if (invoicedetail.item != null) { command.Parameters.AddWithValue("@item", invoicedetail.item); } else { command.Parameters.AddWithValue("@item", DBNull.Value); } 
 					if (invoicedetail.weight != null) { command.Parameters.AddWithValue("@weight", invoicedetail.weight); } else { command.Parameters.AddWithValue("@weight", DBNull.Value); } 
 					if (invoicedetail.qty != null) { command.Parameters.AddWithValue("@qty", invoicedetail.qty); } else { command.Parameters.AddWithValue("@qty", DBNull.Value); } 
@@ -181,7 +181,7 @@ namespace WGS_COURIER.Repositories
 			return items;
 		}
 
-		public List<INVOICEDETAIL> GetDataByid(int id)
+		public List<INVOICEDETAIL> GetDataByid(string id)
 		{
 			List<INVOICEDETAIL> items = new List<INVOICEDETAIL>();
 			using (var conn = new SqlConnection(connString))
@@ -190,7 +190,7 @@ namespace WGS_COURIER.Repositories
 				try
 				{
 					conn.Open();
-					SqlCommand command = new SqlCommand("SELECT [id], [item], [weight], [qty], [unit_price], [total] FROM invoiceDetail WHERE no_invoice = @id", conn);
+					SqlCommand command = new SqlCommand("SELECT [id], [item], [weight], [qty], [unit_price], [total],[no_invoice] FROM invoiceDetail WHERE no_invoice = @id", conn);
 					command.Parameters.AddWithValue("@id", id);
 					SqlDataReader reader = command.ExecuteReader();
 					INVOICEDETAIL item = new INVOICEDETAIL();
@@ -203,6 +203,7 @@ namespace WGS_COURIER.Repositories
 						if (reader[3] != DBNull.Value) { item.qty = Convert.ToInt32(reader[3]); }
 						if (reader[4] != DBNull.Value) { item.unit_price = Convert.ToDouble(reader[4]); }
 						if (reader[5] != DBNull.Value) { item.total = Convert.ToDouble(reader[5]); }
+						if (reader[6] != DBNull.Value) { item.no_invoice = Convert.ToString(reader[6]); }
 						
 						items.Add(item);
 					}
@@ -225,7 +226,7 @@ namespace WGS_COURIER.Repositories
 					conn.Open();
 					SqlCommand command = new SqlCommand("DELETE invoiceDetail WHERE id = @id", conn);
 					command.CommandType = System.Data.CommandType.Text;
-					if (id != null) { command.Parameters.AddWithValue("@id", id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
+					if (id != 0) { command.Parameters.AddWithValue("@id", id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
 					command.ExecuteNonQuery();
 				}
 				catch (Exception ex)

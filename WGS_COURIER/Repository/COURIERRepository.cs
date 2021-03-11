@@ -195,7 +195,7 @@ namespace WGS_COURIER.Repositories
 					conn.Open();
 					SqlCommand command = new SqlCommand("DELETE Courier WHERE id = @id", conn);
 					command.CommandType = System.Data.CommandType.Text;
-					if (id != null) { command.Parameters.AddWithValue("@id", id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
+					if (id != 0) { command.Parameters.AddWithValue("@id", id); } else { command.Parameters.AddWithValue("@id", DBNull.Value); } 
 					command.ExecuteNonQuery();
 				}
 				catch (Exception ex)
