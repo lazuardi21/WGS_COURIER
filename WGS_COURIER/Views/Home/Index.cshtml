@@ -382,7 +382,7 @@
             debugger;
             $("#addModal").modal();
         }
-        function GetList() {
+        function GetList(ID) {
              @*$.ajax({
                     url: '@Url.Action("InvoiceDetailList", "Home", new { id = "x"})'.replace(/x/g,Id)
 
@@ -395,15 +395,45 @@
                      console.log(errorThrown)
                      alert("Something Went Wrong, Try Later");
                  });*@
-
-            var no_inv = document.getElementById("invoice").value;
-            var Id = no_inv;
-
+            if (ID != "") {
+                var Id = ID;
+            }
+            else {
+                var no_inv = document.getElementById("invoice").value;
+                var Id = no_inv;
+                if (Id == "") {
+                    var no_inv = document.getElementById("no_invoice2").value;
+                    var Id = no_inv;
+                }
+                else {
+                    var no_inv = document.getElementById("no_invoice3").value;
+                    var Id = no_inv;
+                }
+            }
+            
             //debugger
             $("#item").show();
             debugger;
             $.ajax({
                     url: '@Url.Action("InvoiceDetailFiltered", "Home", new { id = "x"})'.replace(/x/g,Id)
+
+                }).done(function(result) {
+                    $('#dataContainer').html(result);
+                     //$('#example1').DataTable()
+                    console.log(result)
+                 }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                     console.log(textStatus)
+                     console.log(errorThrown)
+                     alert("Something Went Wrong, Try Later");
+                 });
+
+        }
+        function GetList2() {
+            //debugger
+            $("#item").show();
+            debugger;
+            $.ajax({
+                    url: '@Url.Action("InvoiceDetailList", "Home")'
 
                 }).done(function(result) {
                     $('#dataContainer').html(result);
@@ -450,7 +480,7 @@
                 dataType: "json",
                 success: function (data) {
                     if (data == null) {
-                        alert("Department Added Successfully");
+                        alert("Item Added Successfully");
                         $("#item").val("");
                         $("#weight").val("");
                         $("#qty").val("");
@@ -463,7 +493,7 @@
                         alert("Error Please Try again Later");
                         $('#addModal').modal('hide');
                     }
-                    GetList();
+                    GetList2();
                 },
                 error: function () {
                     alert("Something Went Wrong, Try Later");
@@ -525,7 +555,7 @@
                 dataType: "json",
                 success: function (data) {
                     if (data != "") {
-                        alert("Department Updated Successfully");
+                        alert("Item Updated Successfully");
                         $("#item2").val("");
                         $("#weight2").val("");
                         $("#qty2").val("");
@@ -538,7 +568,7 @@
                         alert("Something Went Wrong, Try Later");
                         $('#editModal').modal('hide');
                     }
-                    GetList();
+                    GetList(inv.no_invoice);
                 },
                 error: function () {
                     alert("Something Went Wrong, Try Later");
